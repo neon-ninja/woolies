@@ -2,3 +2,6 @@ requests-cache
 pandas
 tqdm
 nbconvert
+jupyter
+notebook
+ipykernel
