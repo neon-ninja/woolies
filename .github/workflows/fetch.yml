@@ -1,0 +1,36 @@
+name: Run fetch.ipynb and Commit Changes
+
+on:
+  schedule:
+           # m h dom mon dow
+    - cron: '0 18 * * *'
+
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  run_notebook:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'  # or whichever Python version you prefer
+
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run Jupyter Notebook
+      run: jupyter nbconvert --to notebook --execute --inplace fetch.ipynb
+
+    - name: Commit Changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git commit -am "Automated execution of fetch.ipynb"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
