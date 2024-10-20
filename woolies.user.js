@@ -67,11 +67,10 @@
             yaxis: { title: 'Price (NZD)' }
         };
 
-        const chartDiv = document.createElement('div');
-        chartDiv.style = 'width: 100%; height: 400px; margin-top: 20px;';
-        $('p.product-description').prepend(chartDiv);
+        $("#chart").remove();
+        $('p.product-description').prepend(`<div id="chart" style="width: 100%; height: 400px; margin-top: 20px;"></div>`);
 
-        Plotly.newPlot(chartDiv, data, layout);
+        Plotly.newPlot($("#chart")[0], data, layout);
     }
 
     // Helper to wait for the product-details div to exist with observer cleanup
@@ -88,6 +87,36 @@
             childList: true,
             subtree: true
         });
+    }
+
+    // Detect URL change
+    function detectUrlChange(callback) {
+        let oldHref = window.location.href;
+
+        // Intercept history methods (pushState and replaceState)
+        const originalPushState = history.pushState;
+        const originalReplaceState = history.replaceState;
+
+        history.pushState = function () {
+            originalPushState.apply(this, arguments);
+            callback(); // Call when pushState is triggered
+        };
+
+        history.replaceState = function () {
+            originalReplaceState.apply(this, arguments);
+            callback(); // Call when replaceState is triggered
+        };
+
+        // Listen for popstate (back/forward buttons)
+        window.addEventListener('popstate', callback);
+
+        // Poll for URL changes (just in case)
+        setInterval(() => {
+            if (window.location.href !== oldHref) {
+                oldHref = window.location.href;
+                callback();
+            }
+        }, 500);
     }
 
     // Main function to fetch data and display chart
@@ -115,5 +144,18 @@
         });
     }
 
-    main();
+    // Initialize and detect URL changes
+    function initialize() {
+        main(); // Run the main function when the page first loads
+    }
+
+    // Detect URL change and re-initialize when it happens
+    detectUrlChange(() => {
+        console.log('URL changed, re-initializing...');
+        initialize();
+    });
+
+    // Run the initial script
+    initialize();
+
 })();
