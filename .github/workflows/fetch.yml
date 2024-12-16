@@ -1,7 +1,7 @@
 name: Run fetch.ipynb and Commit Changes
 
 on:
-  schedule:
+  #schedule:
            # m h dom mon dow
     #- cron: '0 18 * * *'
 
