@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Check connectivity
-      run: curl -vv https://www.woolworths.co.nz/api/v1/products
+      run: curl -A GitHub -vv https://www.woolworths.co.nz/api/v1/products
     
     - name: Checkout Repository
       uses: actions/checkout@v3
