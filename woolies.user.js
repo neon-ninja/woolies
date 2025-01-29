@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         Woolies Price History Plot
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Fetch and display price history from CSV for Woolworths product pages.
 // @updateURL      https://raw.githubusercontent.com/neon-ninja/woolies/refs/heads/main/woolies.user.js
 // @downloadURL    https://raw.githubusercontent.com/neon-ninja/woolies/refs/heads/main/woolies.user.js
 // @author       neonninja
-// @match        https://www.woolworths.co.nz/shop/productdetails?stockcode=*
+// @match        https://www.woolworths.co.nz/shop/productdetails?*stockcode=*
 // @require      https://cdn.plot.ly/plotly-latest.min.js
 // @require     https://code.jquery.com/jquery-3.6.0.min.js
 // @grant        none
