@@ -14,6 +14,7 @@ jobs:
     steps:
     - name: Check connectivity
       run: |
+        curl ipinfo.io
         curl -A GHA -vv https://www.woolworths.co.nz/
         curl -A GHA -vv https://www.woolworths.co.nz/api/v1/products
     
